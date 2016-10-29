@@ -1,0 +1,4 @@
+---
+# defaults file for BaxterStockman.systemd_openssh_multibound
+
+systemd_openssh_multibound_services: []

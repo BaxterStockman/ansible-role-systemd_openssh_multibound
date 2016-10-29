@@ -1,0 +1,9 @@
+- name: template | create systemd socket file
+  template:
+    src: 'sshd.socket.j2'
+    dest: '/etc/systemd/system/{{ systemd_openssh_multibound_service.name | mandatory }}.socket'
+
+- name: template | create systemd service file
+  template:
+    src: 'sshd@.service.j2'
+    dest: '/etc/systemd/system/{{ systemd_openssh_multibound_service.name | mandatory }}@.service'

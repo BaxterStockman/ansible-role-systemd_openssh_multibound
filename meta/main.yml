@@ -1,0 +1,11 @@
+galaxy_info:
+  author: Matt Schreiber
+  description: Create systemd socket units for multiple sshd instances
+  license: MIT
+  min_ansible_version: 2.1
+  galaxy_tags:
+    - ssh
+    - sshd
+    - openssh
+    - systemd
+dependencies: []

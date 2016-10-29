@@ -1,0 +1,19 @@
+---
+- hosts: all
+  roles:
+    - role: '{{ playbook_dir | dirname | realpath | basename }}'
+      systemd_openssh_multibound_services:
+        - bind_to_device: enp2s1
+          name: sshd_wan
+          secure: yes
+          listen_streams:
+            - host: 54.219.86.112
+              port: 44829
+            - port: 12312
+            - 55.220.87.113:44830
+        - name: sshd_lan
+          secure: no
+          listen_streams:
+            - host: 192.168.10.10
+              port: 22
+            - 192.168.10.11:2222

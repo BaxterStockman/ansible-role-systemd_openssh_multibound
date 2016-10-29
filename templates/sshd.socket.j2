@@ -1,0 +1,21 @@
+#jinja2: lstrip_blocks: True
+[Unit]
+Conflicts=sshd.service
+Wants=sshdgenkeys.service
+
+[Socket]
+FreeBind=true
+Accept=yes
+{% if systemd_openssh_multibound_service.bind_to_device is defined %}
+BindToDevice= {{ systemd_openssh_multibound_service.bind_to_device }}
+{% endif %}
+{% for listen_stream in systemd_openssh_multibound_service.listen_streams %}
+    {% if listen_stream is mapping %}
+ListenStream={{ [listen_stream.host, listen_stream.port] | select('defined') | join(':') }}
+    {% else %}
+ListenStream={{ listen_stream }}
+    {% endif %}
+{% endfor %}
+
+[Install]
+WantedBy=sockets.target

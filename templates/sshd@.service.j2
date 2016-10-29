@@ -1,0 +1,13 @@
+#jinja2: lstrip_blocks: True
+[Unit]
+Description=OpenSSH Per-Connection Daemon
+After=sshdgenkeys.service
+
+[Service]
+{% if systemd_openssh_multibound_service.secure | bool %}
+ExecStart=-/usr/bin/sshd -o PermitRootLogin=no -o PasswordAuthentication=no -o LoginGraceTime=20s -i
+{% else %}
+ExecStart=-/usr/bin/sshd -i
+{% endif %}
+StandardInput=socket
+StandardError=syslog

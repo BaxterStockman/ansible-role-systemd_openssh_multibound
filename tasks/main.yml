@@ -1,0 +1,19 @@
+---
+# tasks file for BaxterStockman.systemd_openssh_multibound
+
+- name: main | ensure all options are present
+  assert:
+    that:
+      - '"name" in systemd_openssh_multibound_service'
+      - '"listen_streams" in systemd_openssh_multibound_service'
+      - 'systemd_openssh_multibound_service.listen_streams is iterable'
+      - 'systemd_openssh_multibound_service.listen_streams is not string'
+  loop_control:
+    loop_var: systemd_openssh_multibound_service
+  with_items: '{{ systemd_openssh_multibound_services }}'
+
+- name: main | include templating tasks for WAN and LAN SSH daemons
+  include: template.yml
+  loop_control:
+    loop_var: systemd_openssh_multibound_service
+  with_items: '{{ systemd_openssh_multibound_services }}'
